@@ -105,25 +105,9 @@ body {
 
 @keyframes moonGlow {
   0% { transform: scale(1); }
-  5% { transform: scale(1.0025); }
-  10% { transform: scale(1.005); }
-  15% { transform: scale(1.008); }
-  20% { transform: scale(1.012); }
-  25% { transform: scale(1.016); }
-  30% { transform: scale(1.022); }
-  35% { transform: scale(1.030); }
-  40% { transform: scale(1.040); }
-  45% { transform: scale(1.050); }
+ 
   50% { transform: scale(1.10); }
-  55% { transform: scale(1.050); }
-  60% { transform: scale(1.040); }
-  65% { transform: scale(1.030); }
-  70% { transform: scale(1.022); }
-  75% { transform: scale(1.016); }
-  80% { transform: scale(1.012); }
-  85% { transform: scale(1.008); }
-  90% { transform: scale(1.005); }
-  95% { transform: scale(1.0025); }
+ 
   100% { transform: scale(1); }
 }
 
