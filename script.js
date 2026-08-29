@@ -34,7 +34,7 @@ const movingStarColors = [
   '#f0abfc', '#fde68a', '#a7f3d0', '#fed7aa'
 ];
 
-for (let i = 0; i < 12; i++) {
+for (let i = 0; i < 30; i++) {
   const star = document.createElement('div');
   star.className = 'moving-star';
 
