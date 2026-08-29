@@ -107,14 +107,9 @@ body {
   border-radius: 50%;
   mix-blend-mode: normal;
   filter: contrast(1.06) brightness(1.0) saturate(0.60);
-  opacity: 0;
+  opacity: 1;
   pointer-events: none;
   will-change: opacity;
-}
-
-.moon-phase-image.active,
-.moon-phase-image.blend {
-  opacity: 1;
 }
 
 @keyframes moonGlow {
