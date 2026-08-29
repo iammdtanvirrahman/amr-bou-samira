@@ -33,22 +33,62 @@ body {
   z-index: 2;
 }
 
-.star {
+.star,
+.moving-star {
   position: absolute;
   border-radius: 50%;
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity;
+}
+
+.star {
   opacity: 0.85;
   animation: twinkle 2s infinite ease-in-out;
-  will-change: opacity, transform;
+}
+
+.moving-star {
+  z-index: 1;
+  opacity: 0;
+  animation-name: starTravel;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
 @keyframes twinkle {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.85;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.2;
     transform: scale(0.7);
+  }
+}
+
+@keyframes starTravel {
+  0% {
+    opacity: 0;
+    transform: translate3d(-15vw, 12vh, 0) scale(0.65);
+  }
+
+  8% {
+    opacity: 0.9;
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate3d(42vw, -20vh, 0) scale(1);
+  }
+
+  92% {
+    opacity: 0.9;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(115vw, -48vh, 0) scale(0.55);
   }
 }
 
@@ -95,25 +135,25 @@ body {
 }
 
 @keyframes moonGlow {
-  0% {
+  0%,
+  100% {
     filter: contrast(1.06) brightness(1.40) saturate(0.60);
     transform: scale(1);
   }
+
   25% {
     filter: contrast(1.07) brightness(1.52) saturate(0.63);
     transform: scale(1.008);
   }
+
   50% {
     filter: contrast(1.08) brightness(1.68) saturate(0.66);
     transform: scale(1.018);
   }
+
   75% {
     filter: contrast(1.07) brightness(1.52) saturate(0.63);
     transform: scale(1.008);
-  }
-  100% {
-    filter: contrast(1.06) brightness(1.40) saturate(0.60);
-    transform: scale(1);
   }
 }
 
@@ -139,14 +179,17 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
+
   15% {
     opacity: 1;
     transform: translateY(0);
   }
+
   85% {
     opacity: 1;
     transform: translateY(-20px);
   }
+
   100% {
     opacity: 0;
     transform: translateY(-40px);
