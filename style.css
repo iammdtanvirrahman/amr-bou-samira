@@ -98,8 +98,8 @@ body {
   border-radius: 50%;
   mix-blend-mode: normal;
   filter: contrast(1.06) brightness(1.0) saturate(0.60);
-  animation: moonBreathing 18s ease-in-out infinite;
-  -webkit-animation: moonBreathing 18s ease-in-out infinite;
+  animation: moonGlow 18s ease-in-out infinite;
+  -webkit-animation: moonGlow 18s ease-in-out infinite;
   transform-origin: center center;
   -webkit-transform-origin: center center;
   will-change: transform;
@@ -107,52 +107,32 @@ body {
   backface-visibility: hidden;
 }
 
-@keyframes moonBreathing {
-  0% { transform: scale(1); }
-  5% { transform: scale(1.002); }
-  10% { transform: scale(1.004); }
-  15% { transform: scale(1.007); }
-  20% { transform: scale(1.011); }
-  25% { transform: scale(1.016); }
-  30% { transform: scale(1.022); }
-  35% { transform: scale(1.029); }
-  40% { transform: scale(1.037); }
-  45% { transform: scale(1.046); }
-  50% { transform: scale(1.10); }
-  55% { transform: scale(1.046); }
-  60% { transform: scale(1.037); }
-  65% { transform: scale(1.029); }
-  70% { transform: scale(1.022); }
-  75% { transform: scale(1.016); }
-  80% { transform: scale(1.011); }
-  85% { transform: scale(1.007); }
-  90% { transform: scale(1.004); }
-  95% { transform: scale(1.002); }
-  100% { transform: scale(1); }
+@keyframes moonGlow {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.10);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
-@-webkit-keyframes moonBreathing {
-  0% { -webkit-transform: scale(1); }
-  5% { -webkit-transform: scale(1.002); }
-  10% { -webkit-transform: scale(1.004); }
-  15% { -webkit-transform: scale(1.007); }
-  20% { -webkit-transform: scale(1.011); }
-  25% { -webkit-transform: scale(1.016); }
-  30% { -webkit-transform: scale(1.022); }
-  35% { -webkit-transform: scale(1.029); }
-  40% { -webkit-transform: scale(1.037); }
-  45% { -webkit-transform: scale(1.046); }
-  50% { -webkit-transform: scale(1.10); }
-  55% { -webkit-transform: scale(1.046); }
-  60% { -webkit-transform: scale(1.037); }
-  65% { -webkit-transform: scale(1.029); }
-  70% { -webkit-transform: scale(1.022); }
-  75% { -webkit-transform: scale(1.016); }
-  80% { -webkit-transform: scale(1.011); }
-  85% { -webkit-transform: scale(1.007); }
-  90% { -webkit-transform: scale(1.004); }
-  95% { -webkit-transform: scale(1.002); }
-  100% { -webkit-transform: scale(1); }
+@-webkit-keyframes moonGlow {
+  0% {
+    -webkit-transform: scale(1);
+  }
+
+  50% {
+    -webkit-transform: scale(1.10);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+  }
 }
 
 .floating-text {
