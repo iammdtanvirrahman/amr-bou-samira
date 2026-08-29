@@ -53,55 +53,53 @@ for (let i = 0; i < 30; i++) {
   starsContainer.appendChild(star);
 }
 
-/*
- * DATE-BASED LUNAR PHASE
- *
- * Reference: known New Moon on 2000-01-06 18:14 UTC.
- * Synodic month: 29.530588853 days.
- * The calculated lunar age is mapped to the 8 supplied realistic images.
- * Between two phase images we cross-fade, so the Moon changes gradually
- * instead of jumping abruptly from one image to another.
- */
-const moonImages = [...document.querySelectorAll('.moon-phase-image')];
+/* DATE-BASED LUNAR PHASE — ONE IMAGE ONLY */
+const moonImage = document.querySelector('.moon-phase-image');
 const SYNODIC_MONTH = 29.530588853;
 const REFERENCE_NEW_MOON_UTC = Date.UTC(2000, 0, 6, 18, 14, 0);
 
+const moonPhaseImages = [
+  'moon-new.png',
+  'moon-crescent-waxing.png',
+  'moon-quarter-first.png',
+  'moon-gibbous-waxing.png',
+  'moon-full.png',
+  'moon-gibbous-waning.png',
+  'moon-quarter-last.png',
+  'moon-crescent-waning.png'
+];
+
 function getLunarAge(date = new Date()) {
-  const daysSinceReference = (date.getTime() - REFERENCE_NEW_MOON_UTC) / 86400000;
-  return ((daysSinceReference % SYNODIC_MONTH) + SYNODIC_MONTH) % SYNODIC_MONTH;
+  const daysSinceReference =
+    (date.getTime() - REFERENCE_NEW_MOON_UTC) / 86400000;
+
+  return (
+    ((daysSinceReference % SYNODIC_MONTH) + SYNODIC_MONTH) % SYNODIC_MONTH
+  );
 }
 
 function updateMoonPhase() {
-  if (moonImages.length !== 8) return;
+  if (!moonImage) return;
 
   const age = getLunarAge();
-  const phase = age / SYNODIC_MONTH; // 0..1
+  const phase = age / SYNODIC_MONTH;
+  const index = Math.floor(phase * 8 + 0.5) % 8;
 
-  // 8 supplied images are positioned at these points of the lunar cycle.
-  // 0 = new, .125 = waxing crescent, .25 = first quarter, etc.
-  const exactPosition = phase * 8;
-  const lowerIndex = Math.floor(exactPosition) % 8;
-  const upperIndex = (lowerIndex + 1) % 8;
-  const blend = exactPosition - Math.floor(exactPosition);
+  // IMPORTANT: replace the same image instead of stacking multiple images.
+  moonImage.src = `./${moonPhaseImages[index]}`;
+  moonImage.alt = moonPhaseImages[index].replace('moon-', '').replace('.png', '');
 
-  moonImages.forEach((image) => {
-    image.classList.remove('active', 'blend');
-    image.style.opacity = '0';
-  });
-
-  moonImages[lowerIndex].classList.add('active');
-  moonImages[lowerIndex].style.opacity = String(1 - blend);
-
-  moonImages[upperIndex].classList.add('blend');
-  moonImages[upperIndex].style.opacity = String(blend);
-
-  // Useful for debugging in the console without affecting the UI.
-  document.querySelector('.moon')?.setAttribute('data-lunar-age', age.toFixed(2));
+  document.querySelector('.moon')?.setAttribute(
+    'data-lunar-age',
+    age.toFixed(2)
+  );
+  document.querySelector('.moon')?.setAttribute(
+    'data-lunar-phase',
+    moonPhaseImages[index]
+  );
 }
 
 updateMoonPhase();
-
-// Refresh once per minute so the phase follows the current date/time.
 setInterval(updateMoonPhase, 60000);
 
 const messages = [
