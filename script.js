@@ -1,21 +1,12 @@
 const starsContainer = document.querySelector('.stars');
 
-const starColors = [
-  '#ffffff', '#dbeafe', '#93c5fd', '#67e8f9',
-  '#c4b5fd', '#f0abfc', '#fde68a', '#fed7aa', '#a7f3d0'
-];
+const starColors = ['#ffffff','#dbeafe','#93c5fd','#67e8f9','#c4b5fd','#f0abfc','#fde68a','#fed7aa','#a7f3d0'];
 
-// Static twinkling stars
 for (let i = 0; i < 650; i++) {
   const star = document.createElement('div');
   star.className = 'star';
-
-  const size = Math.random() < 0.88
-    ? Math.random() * 1.7 + 0.7
-    : Math.random() * 3 + 1.5;
-
+  const size = Math.random() < 0.88 ? Math.random() * 1.7 + 0.7 : Math.random() * 3 + 1.5;
   const color = starColors[Math.floor(Math.random() * starColors.length)];
-
   star.style.top = Math.random() * 100 + '%';
   star.style.left = Math.random() * 100 + '%';
   star.style.width = size + 'px';
@@ -24,23 +15,16 @@ for (let i = 0; i < 650; i++) {
   star.style.boxShadow = `0 0 ${size > 2.2 ? 9 : 4}px ${color}`;
   star.style.animationDuration = Math.random() * 3 + 1.2 + 's';
   star.style.animationDelay = Math.random() * 4 + 's';
-
   starsContainer.appendChild(star);
 }
 
-// Moving multi-color stars
-const movingStarColors = [
-  '#ffffff', '#67e8f9', '#93c5fd', '#c4b5fd',
-  '#f0abfc', '#fde68a', '#a7f3d0', '#fed7aa'
-];
+const movingStarColors = ['#ffffff','#67e8f9','#93c5fd','#c4b5fd','#f0abfc','#fde68a','#a7f3d0','#fed7aa'];
 
 for (let i = 0; i < 30; i++) {
   const star = document.createElement('div');
   star.className = 'moving-star';
-
   const size = Math.random() * 2.5 + 2;
   const color = movingStarColors[Math.floor(Math.random() * movingStarColors.length)];
-
   star.style.left = Math.random() * 100 + '%';
   star.style.top = Math.random() * 75 + '%';
   star.style.width = size + 'px';
@@ -49,12 +33,12 @@ for (let i = 0; i < 30; i++) {
   star.style.boxShadow = `0 0 ${size * 3}px ${color}, 0 0 ${size * 6}px ${color}`;
   star.style.animationDuration = Math.random() * 7 + 7 + 's';
   star.style.animationDelay = Math.random() * -12 + 's';
-
   starsContainer.appendChild(star);
 }
 
-/* DATE-BASED LUNAR PHASE — ONE IMAGE ONLY */
+/* DATE-BASED LUNAR PHASE — EXACTLY ONE IMAGE */
 const moonImage = document.querySelector('.moon-phase-image');
+const moonElement = document.querySelector('.moon');
 const SYNODIC_MONTH = 29.530588853;
 const REFERENCE_NEW_MOON_UTC = Date.UTC(2000, 0, 6, 18, 14, 0);
 
@@ -70,57 +54,57 @@ const moonPhaseImages = [
 ];
 
 function getLunarAge(date = new Date()) {
-  const daysSinceReference =
-    (date.getTime() - REFERENCE_NEW_MOON_UTC) / 86400000;
+  const days = (date.getTime() - REFERENCE_NEW_MOON_UTC) / 86400000;
+  return ((days % SYNODIC_MONTH) + SYNODIC_MONTH) % SYNODIC_MONTH;
+}
 
-  return (
-    ((daysSinceReference % SYNODIC_MONTH) + SYNODIC_MONTH) % SYNODIC_MONTH
-  );
+function getMoonPhaseIndex(age) {
+  return Math.floor((age / SYNODIC_MONTH) * 8 + 0.5) % 8;
 }
 
 function updateMoonPhase() {
   if (!moonImage) return;
 
   const age = getLunarAge();
-  const phase = age / SYNODIC_MONTH;
-  const index = Math.floor(phase * 8 + 0.5) % 8;
+  const index = getMoonPhaseIndex(age);
+  const filename = moonPhaseImages[index];
 
-  // IMPORTANT: replace the same image instead of stacking multiple images.
-  moonImage.src = `./${moonPhaseImages[index]}`;
-  moonImage.alt = moonPhaseImages[index].replace('moon-', '').replace('.png', '');
+  // Replace the existing image only. No second Moon is ever added.
+  if (!moonImage.src.endsWith('/' + filename)) {
+    moonImage.src = './' + filename;
+  }
 
-  document.querySelector('.moon')?.setAttribute(
-    'data-lunar-age',
-    age.toFixed(2)
-  );
-  document.querySelector('.moon')?.setAttribute(
-    'data-lunar-phase',
-    moonPhaseImages[index]
-  );
+  moonImage.alt = filename.replace('moon-', '').replace('.png', '');
+
+  if (moonElement) {
+    moonElement.dataset.lunarAge = age.toFixed(3);
+    moonElement.dataset.lunarPhase = filename;
+  }
 }
 
 updateMoonPhase();
 setInterval(updateMoonPhase, 60000);
 
 const messages = [
-  "ওগো আমার মায়াবতী সামিরা...।",
-  "তুমি আমার জীবনে ঐ চাঁদটার চেয়েও বেশি সুন্দর, বেশি স্পেশাল।",
-  "তুমি আমার মায়াবতী রাজকন্যা, আমার মিষ্টি বউ, সুন্দরী আমার...",
-  "আমি যদি অর্ফিয়াস হতাম, সারাটি জীবন শুধু তোমার জন্যই বাঁশি বাজাতাম।",
-  "দা ভিঞ্চি হলে সারাজীবন তোমাকেই আঁকতাম।",
-  "শেক্সপিয়ার হলে তুমি হতে আমার গল্পের নায়িকা।",
-  "আমি যদি শাহজাহান হতাম, তুমি হতে আমার মমতাজ।",
-  "তুমি আছো বলেই আমার রাতগুলো এত সুন্দর, চাঁদ যেন তোমারই প্রতিবিম্ব।",
-  "তোমার হাসি আমাকে অন্ধকারেও পথ দেখায়।",
-  "তুমি ছাড়া আমি অসম্পূর্ণ — এক অপূর্ণ গল্পের নায়ক।",
-  "তোমাকে ভালোবাসি তারাও জানে, রাতের আকাশই তার সাক্ষী।",
-  "ইতি কেবল তোমারই তানভীর"
+  'ওগো আমার মায়াবতী সামিরা...।',
+  'তুমি আমার জীবনে ঐ চাঁদটার চেয়েও বেশি সুন্দর, বেশি স্পেশাল।',
+  'তুমি আমার মায়াবতী রাজকন্যা, আমার মিষ্টি বউ, সুন্দরী আমার...',
+  'আমি যদি অর্ফিয়াস হতাম, সারাটি জীবন শুধু তোমার জন্যই বাঁশি বাজাতাম।',
+  'দা ভিঞ্চি হলে সারাজীবন তোমাকেই আঁকতাম।',
+  'শেক্সপিয়ার হলে তুমি হতে আমার গল্পের নায়িকা।',
+  'আমি যদি শাহজাহান হতাম, তুমি হতে আমার মমতাজ।',
+  'তুমি আছো বলেই আমার রাতগুলো এত সুন্দর, চাঁদ যেন তোমারই প্রতিবিম্ব।',
+  'তোমার হাসি আমাকে অন্ধকারেও পথ দেখায়।',
+  'তুমি ছাড়া আমি অসম্পূর্ণ — এক অপূর্ণ গল্পের নায়ক।',
+  'তোমাকে ভালোবাসি তারাও জানে, রাতের আকাশই তার সাক্ষী।',
+  'ইতি কেবল তোমারই তানভীর'
 ];
 
 let index = 0;
 const floatingText = document.getElementById('floatingText');
 
 function showNextMessage() {
+  if (!floatingText) return;
   floatingText.textContent = messages[index];
   floatingText.style.animation = 'none';
   void floatingText.offsetWidth;
