@@ -7,7 +7,8 @@
   <title>Ultra Realistic Night Sky</title>
   <style>
     *{box-sizing:border-box} html,body{margin:0;width:100%;height:100%;overflow:hidden}
-    body{background:radial-gradient(circle at center,#02020f 0%,#000 100%);min-height:100dvh;height:100vh;font-family:'Noto Sans Bengali',sans-serif;position:relative;-webkit-tap-highlight-color:transparent}
+    body{background:#000 url('2.jpeg') center center / cover no-repeat fixed;min-height:100dvh;height:100vh;font-family:'Noto Sans Bengali',sans-serif;position:relative;-webkit-tap-highlight-color:transparent}
+    body::before{content:"";position:absolute;inset:0;background:rgba(0,0,20,.18);z-index:0;pointer-events:none}
     .stars{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;z-index:1}
     .star{position:absolute;border-radius:50%;opacity:.85;animation:twinkle 2s infinite ease-in-out;will-change:opacity,transform}
     @keyframes twinkle{0%,100%{opacity:.85;transform:scale(1)}50%{opacity:.2;transform:scale(.7)}}
@@ -28,24 +29,16 @@
   <script>
     const starsContainer=document.querySelector('.stars');
     const starColors=['#ffffff','#dbeafe','#93c5fd','#67e8f9','#c4b5fd','#f0abfc','#fde68a','#fed7aa','#a7f3d0'];
-
-    // Dense colorful fixed dot-stars: same simple dot style, no tails/trails.
     for(let i=0;i<650;i++){
-      const star=document.createElement('div');
-      star.className='star';
+      const star=document.createElement('div');star.className='star';
       const size=Math.random()<.88?Math.random()*1.7+.7:Math.random()*3+1.5;
       const color=starColors[Math.floor(Math.random()*starColors.length)];
-      star.style.top=Math.random()*100+'%';
-      star.style.left=Math.random()*100+'%';
-      star.style.width=size+'px';
-      star.style.height=size+'px';
-      star.style.backgroundColor=color;
+      star.style.top=Math.random()*100+'%';star.style.left=Math.random()*100+'%';
+      star.style.width=size+'px';star.style.height=size+'px';star.style.backgroundColor=color;
       star.style.boxShadow=`0 0 ${size>2.2?9:4}px ${color}`;
-      star.style.animationDuration=(Math.random()*3+1.2)+'s';
-      star.style.animationDelay=(Math.random()*4)+'s';
+      star.style.animationDuration=(Math.random()*3+1.2)+'s';star.style.animationDelay=(Math.random()*4)+'s';
       starsContainer.appendChild(star);
     }
-
     const messages=["ওগো আমার মায়াবতী সামিরা...।","তুমি আমার জীবনে ঐ চাঁদটার চেয়েও বেশি সুন্দর, বেশি স্পেশাল।","তুমি আমার মায়াবতী রাজকন্যা, আমার মিষ্টি বউ, সুন্দরী আমার...","আমি যদি অর্ফিয়াসের হতাম, সারাটি জীবন শুধু তোমার জন্যই বাঁশি বাজাতাম।","দা ভিঞ্চি হলে সারাজীবন তোমাকেই আঁকতাম।","শেক্সপিয়ার হলে তুমি হতে আমার গল্পের নায়িকা।","আমি যদি শাহজাহান হতাম, তুমি হতে আমার মমতাজ।","তুমি আছো বলেই আমার রাতগুলো এত সুন্দর, চাঁদ যেন তোমারই প্রতিবিম্ব।","তোমার হাসি আমাকে অন্ধকারেও পথ দেখায়।","তুমি ছাড়া আমি অসম্পূর্ণ — এক অপূর্ণ গল্পের নায়ক।","তোমাকে ভালোবাসি তারাও জানে, রাতের আকাশই তার সাক্ষী।","ইতি কেবল তোমারই তানভীর"];
     let index=0;const floatingText=document.getElementById('floatingText');
     function showNextMessage(){floatingText.textContent=messages[index];floatingText.style.animation='none';void floatingText.offsetWidth;floatingText.style.animation=null;index=(index+1)%messages.length}
