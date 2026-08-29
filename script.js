@@ -53,6 +53,57 @@ for (let i = 0; i < 30; i++) {
   starsContainer.appendChild(star);
 }
 
+/*
+ * DATE-BASED LUNAR PHASE
+ *
+ * Reference: known New Moon on 2000-01-06 18:14 UTC.
+ * Synodic month: 29.530588853 days.
+ * The calculated lunar age is mapped to the 8 supplied realistic images.
+ * Between two phase images we cross-fade, so the Moon changes gradually
+ * instead of jumping abruptly from one image to another.
+ */
+const moonImages = [...document.querySelectorAll('.moon-phase-image')];
+const SYNODIC_MONTH = 29.530588853;
+const REFERENCE_NEW_MOON_UTC = Date.UTC(2000, 0, 6, 18, 14, 0);
+
+function getLunarAge(date = new Date()) {
+  const daysSinceReference = (date.getTime() - REFERENCE_NEW_MOON_UTC) / 86400000;
+  return ((daysSinceReference % SYNODIC_MONTH) + SYNODIC_MONTH) % SYNODIC_MONTH;
+}
+
+function updateMoonPhase() {
+  if (moonImages.length !== 8) return;
+
+  const age = getLunarAge();
+  const phase = age / SYNODIC_MONTH; // 0..1
+
+  // 8 supplied images are positioned at these points of the lunar cycle.
+  // 0 = new, .125 = waxing crescent, .25 = first quarter, etc.
+  const exactPosition = phase * 8;
+  const lowerIndex = Math.floor(exactPosition) % 8;
+  const upperIndex = (lowerIndex + 1) % 8;
+  const blend = exactPosition - Math.floor(exactPosition);
+
+  moonImages.forEach((image) => {
+    image.classList.remove('active', 'blend');
+    image.style.opacity = '0';
+  });
+
+  moonImages[lowerIndex].classList.add('active');
+  moonImages[lowerIndex].style.opacity = String(1 - blend);
+
+  moonImages[upperIndex].classList.add('blend');
+  moonImages[upperIndex].style.opacity = String(blend);
+
+  // Useful for debugging in the console without affecting the UI.
+  document.querySelector('.moon')?.setAttribute('data-lunar-age', age.toFixed(2));
+}
+
+updateMoonPhase();
+
+// Refresh once per minute so the phase follows the current date/time.
+setInterval(updateMoonPhase, 60000);
+
 const messages = [
   "ওগো আমার মায়াবতী সামিরা...।",
   "তুমি আমার জীবনে ঐ চাঁদটার চেয়েও বেশি সুন্দর, বেশি স্পেশাল।",
