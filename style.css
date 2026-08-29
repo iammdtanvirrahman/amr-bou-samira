@@ -55,35 +55,16 @@ body {
 }
 
 @keyframes twinkle {
-  0%, 100% {
-    opacity: 0.85;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.2;
-    transform: scale(0.7);
-  }
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50% { opacity: 0.2; transform: scale(0.7); }
 }
 
 @keyframes starTravel {
-  0% {
-    opacity: 0;
-    transform: translate3d(-15vw, 12vh, 0) scale(0.65);
-  }
-  8% {
-    opacity: 0.9;
-  }
-  50% {
-    opacity: 1;
-    transform: translate3d(42vw, -20vh, 0) scale(1);
-  }
-  92% {
-    opacity: 0.9;
-  }
-  100% {
-    opacity: 0;
-    transform: translate3d(115vw, -48vh, 0) scale(0.55);
-  }
+  0% { opacity: 0; transform: translate3d(-15vw, 12vh, 0) scale(0.65); }
+  8% { opacity: 0.9; }
+  50% { opacity: 1; transform: translate3d(42vw, -20vh, 0) scale(1); }
+  92% { opacity: 0.9; }
+  100% { opacity: 0; transform: translate3d(115vw, -48vh, 0) scale(0.55); }
 }
 
 .moon {
@@ -95,9 +76,7 @@ body {
   border-radius: 50%;
   z-index: 3;
   pointer-events: none;
-  filter:
-    drop-shadow(0 0 28px rgba(255, 238, 220, 0.3))
-    drop-shadow(0 0 85px rgba(255, 210, 205, 0.13));
+  filter: drop-shadow(0 0 28px rgba(255, 238, 220, 0.3)) drop-shadow(0 0 85px rgba(255, 210, 205, 0.13));
   overflow: visible;
 }
 
@@ -106,13 +85,7 @@ body {
   position: absolute;
   inset: -12%;
   border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(255, 235, 220, 0.2) 0%,
-    rgba(255, 210, 205, 0.1) 35%,
-    rgba(190, 195, 255, 0.05) 55%,
-    transparent 72%
-  );
+  background: radial-gradient(circle, rgba(255, 235, 220, 0.2) 0%, rgba(255, 210, 205, 0.1) 35%, rgba(190, 195, 255, 0.05) 55%, transparent 72%);
   z-index: -1;
   filter: blur(18px);
 }
@@ -132,25 +105,25 @@ body {
 
 @keyframes moonGlow {
   0% { transform: scale(1); }
-  5% { transform: scale(1.006); }
-  10% { transform: scale(1.012); }
-  15% { transform: scale(1.019); }
-  20% { transform: scale(1.027); }
-  25% { transform: scale(1.036); }
-  30% { transform: scale(1.045); }
-  35% { transform: scale(1.055); }
-  40% { transform: scale(1.065); }
-  45% { transform: scale(1.078); }
+  5% { transform: scale(1.0025); }
+  10% { transform: scale(1.005); }
+  15% { transform: scale(1.008); }
+  20% { transform: scale(1.012); }
+  25% { transform: scale(1.016); }
+  30% { transform: scale(1.022); }
+  35% { transform: scale(1.030); }
+  40% { transform: scale(1.040); }
+  45% { transform: scale(1.050); }
   50% { transform: scale(1.10); }
-  55% { transform: scale(1.078); }
-  60% { transform: scale(1.065); }
-  65% { transform: scale(1.055); }
-  70% { transform: scale(1.045); }
-  75% { transform: scale(1.036); }
-  80% { transform: scale(1.027); }
-  85% { transform: scale(1.019); }
-  90% { transform: scale(1.012); }
-  95% { transform: scale(1.006); }
+  55% { transform: scale(1.050); }
+  60% { transform: scale(1.040); }
+  65% { transform: scale(1.030); }
+  70% { transform: scale(1.022); }
+  75% { transform: scale(1.016); }
+  80% { transform: scale(1.012); }
+  85% { transform: scale(1.008); }
+  90% { transform: scale(1.005); }
+  95% { transform: scale(1.0025); }
   100% { transform: scale(1); }
 }
 
@@ -172,74 +145,25 @@ body {
 }
 
 @keyframes floatText {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  15% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  85% {
-    opacity: 1;
-    transform: translateY(-20px);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-40px);
-  }
+  0% { opacity: 0; transform: translateY(20px); }
+  15% { opacity: 1; transform: translateY(0); }
+  85% { opacity: 1; transform: translateY(-20px); }
+  100% { opacity: 0; transform: translateY(-40px); }
 }
 
 @media (max-width: 600px) {
-  body {
-    height: 100dvh;
-    min-height: 100dvh;
-    background-position: center center;
-    background-size: cover;
-  }
-
-  .moon {
-    width: 575px;
-    height: 575px;
-    top: -5%;
-    left: auto;
-    right: -24%;
-  }
-
-  .moon::before {
-    inset: -16%;
-  }
-
-  .floating-text {
-    bottom: 25%;
-    font-size: 24px;
-  }
+  body { height: 100dvh; min-height: 100dvh; background-position: center center; background-size: cover; }
+  .moon { width: 575px; height: 575px; top: -5%; left: auto; right: -24%; }
+  .moon::before { inset: -16%; }
+  .floating-text { bottom: 25%; font-size: 24px; }
 }
 
 @media (max-width: 380px) {
-  .moon {
-    width: 500px;
-    height: 500px;
-    right: -24%;
-    top: -5%;
-  }
-
-  .floating-text {
-    bottom: 20%;
-    font-size: 22px;
-  }
+  .moon { width: 500px; height: 500px; right: -24%; top: -5%; }
+  .floating-text { bottom: 20%; font-size: 22px; }
 }
 
 @media (max-height: 500px) {
-  .moon {
-    width: 450px;
-    height: 450px;
-    top: -7%;
-    right: -20%;
-  }
-
-  .floating-text {
-    bottom: 10%;
-    font-size: 20px;
-  }
+  .moon { width: 450px; height: 450px; top: -7%; right: -20%; }
+  .floating-text { bottom: 10%; font-size: 20px; }
 }
