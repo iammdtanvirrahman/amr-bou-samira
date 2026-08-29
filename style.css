@@ -131,21 +131,41 @@ body {
 }
 
 @keyframes moonGlow {
-  0%, 100% {
+  0% {
     filter: contrast(1.06) brightness(1.0) saturate(0.60);
     transform: scale(1);
   }
-  25% {
-    filter: contrast(1.06) brightness(1.01) saturate(0.60);
-    transform: scale(1.125);
+  14% {
+    filter: contrast(1.06) brightness(1.003) saturate(0.60);
+    transform: scale(1.015);
+  }
+  28% {
+    filter: contrast(1.06) brightness(1.006) saturate(0.60);
+    transform: scale(1.05);
+  }
+  42% {
+    filter: contrast(1.06) brightness(1.009) saturate(0.60);
+    transform: scale(1.10);
   }
   50% {
-    filter: contrast(1.07) brightness(1.02) saturate(0.61);
-    transform: scale(1.5);
+    filter: contrast(1.07) brightness(1.012) saturate(0.61);
+    transform: scale(1.3);
   }
-  75% {
-    filter: contrast(1.06) brightness(1.01) saturate(0.60);
-    transform: scale(1.125);
+  58% {
+    filter: contrast(1.06) brightness(1.009) saturate(0.60);
+    transform: scale(1.10);
+  }
+  72% {
+    filter: contrast(1.06) brightness(1.006) saturate(0.60);
+    transform: scale(1.05);
+  }
+  86% {
+    filter: contrast(1.06) brightness(1.003) saturate(0.60);
+    transform: scale(1.015);
+  }
+  100% {
+    filter: contrast(1.06) brightness(1.0) saturate(0.60);
+    transform: scale(1);
   }
 }
 
