@@ -143,17 +143,17 @@ body {
 
   25% {
     filter: contrast(1.07) brightness(1.52) saturate(0.63);
-    transform: scale(1.008);
+    transform: scale(1.02);
   }
 
   50% {
     filter: contrast(1.08) brightness(1.68) saturate(0.66);
-    transform: scale(1.018);
+    transform: scale(1.045);
   }
 
   75% {
     filter: contrast(1.07) brightness(1.52) saturate(0.63);
-    transform: scale(1.008);
+    transform: scale(1.02);
   }
 }
 
@@ -179,17 +179,14 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
-
   15% {
     opacity: 1;
     transform: translateY(0);
   }
-
   85% {
     opacity: 1;
     transform: translateY(-20px);
   }
-
   100% {
     opacity: 0;
     transform: translateY(-40px);
