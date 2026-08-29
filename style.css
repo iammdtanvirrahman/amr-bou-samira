@@ -90,7 +90,7 @@ body {
   object-fit: contain;
   border-radius: 50%;
   mix-blend-mode: normal;
-  filter: contrast(1.05) brightness(1.06) saturate(0.82);
+  filter: contrast(1.07) brightness(1.6) saturate(0.55);
   animation: moonGlow 5s ease-in-out infinite;
 }
 
