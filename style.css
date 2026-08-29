@@ -124,8 +124,10 @@ body {
   object-fit: contain;
   border-radius: 50%;
   mix-blend-mode: normal;
-  filter: contrast(1.06) brightness(1.45) saturate(0.60);
-  animation: moonGlow 6s ease-in-out infinite;
+  filter: contrast(1.06) brightness(1.0) saturate(0.60);
+  animation: moonGlow 8s ease-in-out infinite;
+  transform-origin: center center;
+  will-change: transform, filter;
 }
 
 @keyframes moonGlow {
@@ -134,15 +136,15 @@ body {
     transform: scale(1);
   }
   25% {
-    filter: contrast(1.07) brightness(1.02) saturate(0.61);
+    filter: contrast(1.06) brightness(1.01) saturate(0.60);
     transform: scale(1.125);
   }
   50% {
-    filter: contrast(1.08) brightness(1.03) saturate(0.62);
+    filter: contrast(1.07) brightness(1.02) saturate(0.61);
     transform: scale(1.5);
   }
   75% {
-    filter: contrast(1.07) brightness(1.02) saturate(0.61);
+    filter: contrast(1.06) brightness(1.01) saturate(0.60);
     transform: scale(1.125);
   }
 }
