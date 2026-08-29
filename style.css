@@ -130,19 +130,19 @@ body {
 
 @keyframes moonGlow {
   0%, 100% {
-    filter: contrast(1.06) brightness(1.05) saturate(0.60);
+    filter: contrast(1.06) brightness(1.0) saturate(0.60);
     transform: scale(1);
   }
   25% {
-    filter: contrast(1.07) brightness(1.07) saturate(0.61);
+    filter: contrast(1.07) brightness(1.02) saturate(0.61);
     transform: scale(1.125);
   }
   50% {
-    filter: contrast(1.08) brightness(1.05) saturate(0.62);
+    filter: contrast(1.08) brightness(1.03) saturate(0.62);
     transform: scale(1.5);
   }
   75% {
-    filter: contrast(1.07) brightness(1.047) saturate(0.61);
+    filter: contrast(1.07) brightness(1.02) saturate(0.61);
     transform: scale(1.125);
   }
 }
