@@ -39,15 +39,16 @@
       position: absolute;
       width: 2px;
       height: 2px;
-      background: white;
+      background: #fff;
       border-radius: 50%;
-      opacity: 0.8;
+      opacity: 0.85;
       animation: twinkle 2s infinite ease-in-out;
+      will-change: opacity, transform;
     }
 
     @keyframes twinkle {
-      0%, 100% { opacity: 0.8; }
-      50% { opacity: 0.2; }
+      0%, 100% { opacity: 0.85; transform: scale(1); }
+      50% { opacity: 0.2; transform: scale(0.7); }
     }
 
     .moon {
@@ -56,12 +57,7 @@
       left: 65%;
       width: 180px;
       height: 180px;
-      background: radial-gradient(
-        circle at 40% 40%,
-        #fafafa,
-        #dcdcdc 70%,
-        #b0b0b0 100%
-      );
+      background: radial-gradient(circle at 40% 40%, #fafafa, #dcdcdc 70%, #b0b0b0 100%);
       border-radius: 50%;
       box-shadow:
         0 0 60px 30px rgba(255, 255, 255, 0.2),
@@ -81,22 +77,21 @@
     .crater3 { top: 60px; left: 120px; width: 25px; height: 25px; }
     .crater4 { top: 130px; left: 40px; width: 10px; height: 10px; }
 
-    /* Updated Floating Text */
     .floating-text {
       position: absolute;
       bottom: 25%;
       left: 5%;
       width: 90%;
       color: #ffffff;
-      font-size: 28px; /* ফন্ট সাইজ বাড়ানো হয়েছে */
-      font-weight: 700; /* লেখা বোল্ড করা হয়েছে */
+      font-size: 28px;
+      font-weight: 700;
       text-align: center;
       line-height: 1.6;
       z-index: 3;
       animation: floatText 6s linear infinite;
       word-wrap: break-word;
       overflow-wrap: break-word;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* লেখায় সুন্দর গ্লো দেওয়া হয়েছে */
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
     }
 
     @keyframes floatText {
@@ -124,10 +119,6 @@
       100% { transform: translate(120vw, 120vh); }
     }
 
-    /* ==============================
-       ANDROID / MOBILE RESPONSIVE
-       ============================== */
-
     @media (max-width: 600px) {
       .moon {
         width: 130px;
@@ -147,7 +138,7 @@
 
       .floating-text {
         bottom: 25%;
-        font-size: 24px; /* মোবাইলের জন্য বড় সাইজ */
+        font-size: 24px;
       }
       .star { width: 1.5px; height: 1.5px; }
       .asteroid { width: 8px; height: 8px; }
@@ -157,7 +148,7 @@
       .moon { width: 110px; height: 110px; right: 7%; top: 10%; }
       .floating-text {
         bottom: 20%;
-        font-size: 22px; /* ছোট মোবাইলের জন্য বড় সাইজ */
+        font-size: 22px;
       }
     }
 
@@ -182,12 +173,40 @@
 
   <script>
     const starsContainer = document.querySelector('.stars');
-    for (let i = 0; i < 200; i++) {
+
+    // Dense, colorful realistic star field
+    const starColors = [
+      '#ffffff', // white
+      '#dbeafe', // icy blue
+      '#93c5fd', // blue
+      '#67e8f9', // cyan
+      '#c4b5fd', // violet
+      '#f0abfc', // pink
+      '#fde68a', // warm yellow
+      '#fed7aa'  // warm orange
+    ];
+
+    // 500 stars for a much denser night sky
+    for (let i = 0; i < 500; i++) {
       const star = document.createElement('div');
       star.classList.add('star');
+
+      const size = Math.random() < 0.82
+        ? Math.random() * 1.6 + 0.7
+        : Math.random() * 2.8 + 1.5;
+
+      const color = starColors[Math.floor(Math.random() * starColors.length)];
+      const glow = size > 2.2 ? 10 : 5;
+
       star.style.top = Math.random() * 100 + '%';
       star.style.left = Math.random() * 100 + '%';
-      star.style.animationDuration = (Math.random() * 2 + 1) + 's';
+      star.style.width = size + 'px';
+      star.style.height = size + 'px';
+      star.style.background = color;
+      star.style.boxShadow = `0 0 ${glow}px ${color}`;
+      star.style.animationDuration = (Math.random() * 3 + 1.2) + 's';
+      star.style.animationDelay = (Math.random() * 3) + 's';
+
       starsContainer.appendChild(star);
     }
 
@@ -212,8 +231,8 @@
     function showNextMessage() {
       floatingText.textContent = messages[index];
       floatingText.style.animation = 'none';
-      void floatingText.offsetWidth; 
-      floatingText.style.animation = null; 
+      void floatingText.offsetWidth;
+      floatingText.style.animation = null;
       index = (index + 1) % messages.length;
     }
 
