@@ -10,9 +10,7 @@ body {
   overflow: hidden;
 }
 
-html {
-  background: #000;
-}
+html { background: #000; }
 
 body {
   width: 100vw;
@@ -24,8 +22,6 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Very subtle atmospheric lift over the photo so the sky feels luminous,
-   while keeping the house and original background visible. */
 body::before {
   content: '';
   position: absolute;
@@ -49,32 +45,33 @@ body::before {
 
 .star,
 .moving-star,
-.firefly {
+.firefly,
+.moon-crossing-star {
   position: absolute;
   border-radius: 50%;
   transform: translate3d(0, 0, 0);
   will-change: transform, opacity;
 }
 
-.star {
-  opacity: 0.88;
-  animation: twinkle 2s infinite ease-in-out;
-}
+.star { opacity: 0.88; animation: twinkle 2s infinite ease-in-out; }
 
 .moving-star {
   z-index: 1;
   opacity: 0;
-  animation-name: starTravel;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+  animation: starTravel linear infinite;
+}
+
+.moon-crossing-star {
+  z-index: 6;
+  opacity: 0;
+  animation: moonCrossing linear infinite;
+  pointer-events: none;
 }
 
 .firefly {
   z-index: 3;
   opacity: 0;
-  animation-name: fireflyFloat;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+  animation: fireflyFloat ease-in-out infinite;
 }
 
 @keyframes twinkle {
@@ -90,16 +87,30 @@ body::before {
   100% { opacity: 0; transform: translate3d(115vw, -48vh, 0) scale(0.55); }
 }
 
-@keyframes fireflyFloat {
-  0%, 100% {
-    opacity: 0.12;
-    transform: translate3d(0, 0, 0) scale(0.65);
+/* These stars travel across the moon itself. */
+@keyframes moonCrossing {
+  0% {
+    opacity: 0;
+    transform: translate3d(-18vw, 14vh, 0) scale(0.55);
   }
-  20% { opacity: 0.85; }
-  48% {
+  10% { opacity: 0.15; }
+  25% { opacity: 0.95; }
+  50% {
     opacity: 1;
-    transform: translate3d(var(--drift-x), var(--drift-y), 0) scale(1.12);
+    transform: translate3d(30vw, -12vh, 0) scale(1.05);
   }
+  72% { opacity: 0.8; }
+  90% { opacity: 0.25; }
+  100% {
+    opacity: 0;
+    transform: translate3d(72vw, -34vh, 0) scale(0.5);
+  }
+}
+
+@keyframes fireflyFloat {
+  0%, 100% { opacity: 0.12; transform: translate3d(0,0,0) scale(0.65); }
+  20% { opacity: 0.85; }
+  48% { opacity: 1; transform: translate3d(var(--drift-x), var(--drift-y), 0) scale(1.12); }
   72% { opacity: 0.38; }
 }
 
@@ -117,12 +128,8 @@ body::before {
     drop-shadow(0 0 105px rgba(255, 215, 210, 0.19));
   overflow: visible;
   animation: moonGlow 18s ease-in-out infinite;
-  -webkit-animation: moonGlow 18s ease-in-out infinite;
   transform-origin: center center;
-  -webkit-transform-origin: center center;
   will-change: transform;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 
 .moon::before {
@@ -147,23 +154,15 @@ body::before {
   height: 100%;
   object-fit: contain;
   border-radius: 50%;
-  mix-blend-mode: normal;
   filter: contrast(1.08) brightness(1.10) saturate(0.64);
   opacity: 1;
   pointer-events: none;
-  will-change: opacity;
 }
 
 @keyframes moonGlow {
   0% { transform: scale(1); }
   50% { transform: scale(1.08); }
   100% { transform: scale(1); }
-}
-
-@-webkit-keyframes moonGlow {
-  0% { -webkit-transform: scale(1); }
-  50% { -webkit-transform: scale(1.08); }
-  100% { -webkit-transform: scale(1); }
 }
 
 .floating-text {
@@ -180,7 +179,7 @@ body::before {
   animation: floatText 6s linear infinite;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  text-shadow: 0 0 10px rgba(255,255,255,0.8);
 }
 
 @keyframes floatText {
