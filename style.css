@@ -24,6 +24,20 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Very subtle atmospheric lift over the photo so the sky feels luminous,
+   while keeping the house and original background visible. */
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 58% 22%, rgba(120, 145, 255, 0.075), transparent 34%),
+    radial-gradient(ellipse at 50% 78%, rgba(255, 220, 150, 0.035), transparent 48%);
+  mix-blend-mode: screen;
+}
+
 .stars {
   position: absolute;
   inset: 0;
@@ -34,7 +48,8 @@ body {
 }
 
 .star,
-.moving-star {
+.moving-star,
+.firefly {
   position: absolute;
   border-radius: 50%;
   transform: translate3d(0, 0, 0);
@@ -42,7 +57,7 @@ body {
 }
 
 .star {
-  opacity: 0.85;
+  opacity: 0.88;
   animation: twinkle 2s infinite ease-in-out;
 }
 
@@ -54,17 +69,38 @@ body {
   animation-iteration-count: infinite;
 }
 
+.firefly {
+  z-index: 3;
+  opacity: 0;
+  animation-name: fireflyFloat;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
 @keyframes twinkle {
-  0%, 100% { opacity: 0.85; transform: scale(1); }
-  50% { opacity: 0.2; transform: scale(0.7); }
+  0%, 100% { opacity: 0.95; transform: scale(1); }
+  50% { opacity: 0.28; transform: scale(0.72); }
 }
 
 @keyframes starTravel {
   0% { opacity: 0; transform: translate3d(-15vw, 12vh, 0) scale(0.65); }
-  8% { opacity: 0.9; }
+  8% { opacity: 0.95; }
   50% { opacity: 1; transform: translate3d(42vw, -20vh, 0) scale(1); }
   92% { opacity: 0.9; }
   100% { opacity: 0; transform: translate3d(115vw, -48vh, 0) scale(0.55); }
+}
+
+@keyframes fireflyFloat {
+  0%, 100% {
+    opacity: 0.12;
+    transform: translate3d(0, 0, 0) scale(0.65);
+  }
+  20% { opacity: 0.85; }
+  48% {
+    opacity: 1;
+    transform: translate3d(var(--drift-x), var(--drift-y), 0) scale(1.12);
+  }
+  72% { opacity: 0.38; }
 }
 
 .moon {
@@ -74,9 +110,11 @@ body {
   width: 1150px;
   height: 1150px;
   border-radius: 50%;
-  z-index: 3;
+  z-index: 4;
   pointer-events: none;
-  filter: drop-shadow(0 0 28px rgba(255, 238, 220, 0.3)) drop-shadow(0 0 85px rgba(255, 210, 205, 0.13));
+  filter:
+    drop-shadow(0 0 34px rgba(255, 242, 225, 0.42))
+    drop-shadow(0 0 105px rgba(255, 215, 210, 0.19));
   overflow: visible;
   animation: moonGlow 18s ease-in-out infinite;
   -webkit-animation: moonGlow 18s ease-in-out infinite;
@@ -92,9 +130,13 @@ body {
   position: absolute;
   inset: -12%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 235, 220, 0.2) 0%, rgba(255, 210, 205, 0.1) 35%, rgba(190, 195, 255, 0.05) 55%, transparent 72%);
+  background: radial-gradient(circle,
+    rgba(255, 242, 225, 0.28) 0%,
+    rgba(255, 222, 215, 0.13) 34%,
+    rgba(190, 195, 255, 0.065) 55%,
+    transparent 72%);
   z-index: -1;
-  filter: blur(18px);
+  filter: blur(20px);
 }
 
 .moon-phase-image {
@@ -106,7 +148,7 @@ body {
   object-fit: contain;
   border-radius: 50%;
   mix-blend-mode: normal;
-  filter: contrast(1.06) brightness(1.0) saturate(0.60);
+  filter: contrast(1.08) brightness(1.10) saturate(0.64);
   opacity: 1;
   pointer-events: none;
   will-change: opacity;
@@ -114,13 +156,13 @@ body {
 
 @keyframes moonGlow {
   0% { transform: scale(1); }
-  50% { transform: scale(1.10); }
+  50% { transform: scale(1.08); }
   100% { transform: scale(1); }
 }
 
 @-webkit-keyframes moonGlow {
   0% { -webkit-transform: scale(1); }
-  50% { -webkit-transform: scale(1.10); }
+  50% { -webkit-transform: scale(1.08); }
   100% { -webkit-transform: scale(1); }
 }
 
@@ -134,7 +176,7 @@ body {
   font-weight: 700;
   text-align: center;
   line-height: 1.6;
-  z-index: 4;
+  z-index: 5;
   animation: floatText 6s linear infinite;
   word-wrap: break-word;
   overflow-wrap: break-word;
