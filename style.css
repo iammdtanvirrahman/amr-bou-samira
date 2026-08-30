@@ -87,30 +87,20 @@ body::before {
   100% { opacity: 0; transform: translate3d(115vw, -48vh, 0) scale(0.55); }
 }
 
-/* These stars travel across the moon itself. */
 @keyframes moonCrossing {
-  0% {
-    opacity: 0;
-    transform: translate3d(-18vw, 14vh, 0) scale(0.55);
-  }
+  0% { opacity: 0; transform: translate3d(-18vw, 14vh, 0) scale(0.55); }
   10% { opacity: 0.15; }
   25% { opacity: 0.95; }
-  50% {
-    opacity: 1;
-    transform: translate3d(30vw, -12vh, 0) scale(1.05);
-  }
+  50% { opacity: 1; transform: translate3d(30vw, -12vh, 0) scale(1.05); }
   72% { opacity: 0.8; }
   90% { opacity: 0.25; }
-  100% {
-    opacity: 0;
-    transform: translate3d(72vw, -34vh, 0) scale(0.5);
-  }
+  100% { opacity: 0; transform: translate3d(72vw, -34vh, 0) scale(0.5); }
 }
 
 @keyframes fireflyFloat {
   0%, 100% { opacity: 0.12; transform: translate3d(0,0,0) scale(0.65); }
   20% { opacity: 0.85; }
-  48% { opacity: 1; transform: translate3d(var(--drift-x), var(--drift-y), 0) scale(1.12); }
+  48% { opacity: 1; transform: translate3d(var(--drift-x),var(--drift-y),0) scale(1.12); }
   72% { opacity: 0.38; }
 }
 
@@ -123,9 +113,7 @@ body::before {
   border-radius: 50%;
   z-index: 4;
   pointer-events: none;
-  filter:
-    drop-shadow(0 0 34px rgba(255, 242, 225, 0.42))
-    drop-shadow(0 0 105px rgba(255, 215, 210, 0.19));
+  filter: drop-shadow(0 0 34px rgba(255,242,225,0.42)) drop-shadow(0 0 105px rgba(255,215,210,0.19));
   overflow: visible;
   animation: moonGlow 18s ease-in-out infinite;
   transform-origin: center center;
@@ -138,9 +126,9 @@ body::before {
   inset: -12%;
   border-radius: 50%;
   background: radial-gradient(circle,
-    rgba(255, 242, 225, 0.28) 0%,
-    rgba(255, 222, 215, 0.13) 34%,
-    rgba(190, 195, 255, 0.065) 55%,
+    rgba(255,242,225,0.28) 0%,
+    rgba(255,222,215,0.13) 34%,
+    rgba(190,195,255,0.065) 55%,
     transparent 72%);
   z-index: -1;
   filter: blur(20px);
@@ -180,6 +168,34 @@ body::before {
   word-wrap: break-word;
   overflow-wrap: break-word;
   text-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+
+/* Tiny magical sparkles that burst around the message when it changes. */
+.message-sparkle {
+  position: fixed;
+  z-index: 20;
+  color: #fff;
+  font-size: 12px;
+  line-height: 1;
+  pointer-events: none;
+  opacity: 0;
+  text-shadow: 0 0 5px #fff, 0 0 12px rgba(255, 220, 245, 0.95);
+  animation: messageSparkle 1.25s ease-out forwards;
+}
+
+@keyframes messageSparkle {
+  0% {
+    opacity: 0;
+    transform: translate3d(-50%, -50%, 0) scale(0.2) rotate(0deg);
+  }
+  18% {
+    opacity: 1;
+    transform: translate3d(-50%, -50%, 0) scale(1.25) rotate(25deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(calc(-50% + var(--spark-x)), calc(-50% + var(--spark-y)), 0) scale(0.25) rotate(90deg);
+  }
 }
 
 @keyframes floatText {
