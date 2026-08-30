@@ -20,7 +20,6 @@ for (let i = 0; i < 1000; i++) {
 
 const movingStarColors = ['#ffffff','#67e8f9','#93c5fd','#c4b5fd','#f0abfc','#fde68a','#a7f3d0','#fed7aa'];
 
-// Background moving stars (behind the moon)
 for (let i = 0; i < 32; i++) {
   const star = document.createElement('div');
   star.className = 'moving-star';
@@ -37,8 +36,7 @@ for (let i = 0; i < 32; i++) {
   starsContainer.appendChild(star);
 }
 
-// TRUE foreground stars: these are outside .stars, so they can physically
-// pass over the moon instead of being trapped below its stacking layer.
+// Foreground stars that can cross directly over the moon.
 for (let i = 0; i < 10; i++) {
   const star = document.createElement('div');
   star.className = 'moon-crossing-star';
@@ -62,14 +60,8 @@ const SYNODIC_MONTH = 29.530588853;
 const REFERENCE_NEW_MOON_UTC = Date.UTC(2000, 0, 6, 18, 14, 0);
 
 const moonPhaseImages = [
-  'moon-new.png',
-  'moon-crescent-waxing.png',
-  'moon-quarter-first.png',
-  'moon-gibbous-waxing.png',
-  'moon-full.png',
-  'moon-gibbous-waning.png',
-  'moon-quarter-last.png',
-  'moon-crescent-waning.png'
+  'moon-new.png','moon-crescent-waxing.png','moon-quarter-first.png','moon-gibbous-waxing.png',
+  'moon-full.png','moon-gibbous-waning.png','moon-quarter-last.png','moon-crescent-waning.png'
 ];
 
 function getLunarAge(date = new Date()) {
@@ -115,6 +107,28 @@ const messages = [
 let index = 0;
 const floatingText = document.getElementById('floatingText');
 
+function createMessageSparkles() {
+  if (!floatingText) return;
+
+  // Remove only the previous message sparkles.
+  document.querySelectorAll('.message-sparkle').forEach(s => s.remove());
+
+  const rect = floatingText.getBoundingClientRect();
+  const count = 3;
+
+  for (let i = 0; i < count; i++) {
+    const sparkle = document.createElement('span');
+    sparkle.className = 'message-sparkle';
+    sparkle.textContent = '✦';
+    sparkle.style.left = (rect.left + rect.width * (0.25 + Math.random() * 0.5)) + 'px';
+    sparkle.style.top = (rect.top + rect.height * (0.25 + Math.random() * 0.5)) + 'px';
+    sparkle.style.setProperty('--spark-x', ((Math.random() - 0.5) * 80) + 'px');
+    sparkle.style.setProperty('--spark-y', (-25 - Math.random() * 45) + 'px');
+    sparkle.style.animationDelay = (i * 90) + 'ms';
+    document.body.appendChild(sparkle);
+  }
+}
+
 function showNextMessage() {
   if (!floatingText) return;
   floatingText.textContent = messages[index];
@@ -122,6 +136,9 @@ function showNextMessage() {
   void floatingText.offsetWidth;
   floatingText.style.animation = null;
   index = (index + 1) % messages.length;
+
+  // Tiny magical sparkle burst exactly when the new message appears.
+  requestAnimationFrame(() => createMessageSparkles());
 }
 
 showNextMessage();
