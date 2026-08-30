@@ -2,7 +2,6 @@ const starsContainer = document.querySelector('.stars');
 
 const starColors = ['#ffffff','#dbeafe','#93c5fd','#67e8f9','#c4b5fd','#f0abfc','#fde68a','#fed7aa','#a7f3d0'];
 
-// Dense, soft twinkling background stars
 for (let i = 0; i < 1000; i++) {
   const star = document.createElement('div');
   star.className = 'star';
@@ -21,9 +20,8 @@ for (let i = 0; i < 1000; i++) {
 
 const movingStarColors = ['#ffffff','#67e8f9','#93c5fd','#c4b5fd','#f0abfc','#fde68a','#a7f3d0','#fed7aa'];
 
-// Shooting / drifting stars across the whole sky.
-// A few are intentionally allowed to pass over the moon for a cute depth effect.
-for (let i = 0; i < 42; i++) {
+// Background moving stars (behind the moon)
+for (let i = 0; i < 32; i++) {
   const star = document.createElement('div');
   star.className = 'moving-star';
   const size = Math.random() * 2.5 + 1.8;
@@ -36,9 +34,25 @@ for (let i = 0; i < 42; i++) {
   star.style.boxShadow = `0 0 ${size * 3}px ${color}, 0 0 ${size * 7}px ${color}`;
   star.style.animationDuration = Math.random() * 8 + 8 + 's';
   star.style.animationDelay = Math.random() * -16 + 's';
-  // Most stay behind the moon, while ~25% travel in front of it.
-  star.style.zIndex = Math.random() < 0.25 ? '5' : '1';
   starsContainer.appendChild(star);
+}
+
+// TRUE foreground stars: these are outside .stars, so they can physically
+// pass over the moon instead of being trapped below its stacking layer.
+for (let i = 0; i < 10; i++) {
+  const star = document.createElement('div');
+  star.className = 'moon-crossing-star';
+  const size = Math.random() * 2.2 + 1.8;
+  const color = movingStarColors[Math.floor(Math.random() * movingStarColors.length)];
+  star.style.left = (35 + Math.random() * 35) + '%';
+  star.style.top = (5 + Math.random() * 55) + '%';
+  star.style.width = size + 'px';
+  star.style.height = size + 'px';
+  star.style.backgroundColor = color;
+  star.style.boxShadow = `0 0 ${size * 3}px ${color}, 0 0 ${size * 8}px ${color}`;
+  star.style.animationDuration = Math.random() * 5 + 7 + 's';
+  star.style.animationDelay = Math.random() * -12 + 's';
+  document.body.appendChild(star);
 }
 
 /* DATE-BASED LUNAR PHASE — EXACTLY ONE IMAGE */
@@ -69,17 +83,11 @@ function getMoonPhaseIndex(age) {
 
 function updateMoonPhase() {
   if (!moonImage) return;
-
   const age = getLunarAge();
   const index = getMoonPhaseIndex(age);
   const filename = moonPhaseImages[index];
-
-  if (!moonImage.src.endsWith('/' + filename)) {
-    moonImage.src = './' + filename;
-  }
-
+  if (!moonImage.src.endsWith('/' + filename)) moonImage.src = './' + filename;
   moonImage.alt = filename.replace('moon-', '').replace('.png', '');
-
   if (moonElement) {
     moonElement.dataset.lunarAge = age.toFixed(3);
     moonElement.dataset.lunarPhase = filename;
