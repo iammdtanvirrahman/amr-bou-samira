@@ -1,39 +1,62 @@
 const starsContainer = document.querySelector('.stars');
 
+/* Dense, natural-looking star field */
 const starColors = ['#ffffff','#dbeafe','#93c5fd','#67e8f9','#c4b5fd','#f0abfc','#fde68a','#fed7aa','#a7f3d0'];
 
-for (let i = 0; i < 650; i++) {
+for (let i = 0; i < 1000; i++) {
   const star = document.createElement('div');
   star.className = 'star';
-  const size = Math.random() < 0.88 ? Math.random() * 1.7 + 0.7 : Math.random() * 3 + 1.5;
+  const size = Math.random() < 0.90 ? Math.random() * 1.8 + 0.65 : Math.random() * 3.2 + 1.4;
   const color = starColors[Math.floor(Math.random() * starColors.length)];
   star.style.top = Math.random() * 100 + '%';
   star.style.left = Math.random() * 100 + '%';
   star.style.width = size + 'px';
   star.style.height = size + 'px';
   star.style.backgroundColor = color;
-  star.style.boxShadow = `0 0 ${size > 2.2 ? 9 : 4}px ${color}`;
-  star.style.animationDuration = Math.random() * 3 + 1.2 + 's';
-  star.style.animationDelay = Math.random() * 4 + 's';
+  star.style.boxShadow = `0 0 ${size > 2.2 ? 10 : 4.5}px ${color}`;
+  star.style.animationDuration = Math.random() * 3.8 + 1.2 + 's';
+  star.style.animationDelay = Math.random() * 5 + 's';
   starsContainer.appendChild(star);
 }
 
+/* A few slower, brighter stars drifting across the sky */
 const movingStarColors = ['#ffffff','#67e8f9','#93c5fd','#c4b5fd','#f0abfc','#fde68a','#a7f3d0','#fed7aa'];
-
-for (let i = 0; i < 30; i++) {
+for (let i = 0; i < 38; i++) {
   const star = document.createElement('div');
   star.className = 'moving-star';
-  const size = Math.random() * 2.5 + 2;
+  const size = Math.random() * 2.7 + 1.8;
   const color = movingStarColors[Math.floor(Math.random() * movingStarColors.length)];
   star.style.left = Math.random() * 100 + '%';
-  star.style.top = Math.random() * 75 + '%';
+  star.style.top = Math.random() * 72 + '%';
   star.style.width = size + 'px';
   star.style.height = size + 'px';
   star.style.backgroundColor = color;
-  star.style.boxShadow = `0 0 ${size * 3}px ${color}, 0 0 ${size * 6}px ${color}`;
-  star.style.animationDuration = Math.random() * 7 + 7 + 's';
-  star.style.animationDelay = Math.random() * -12 + 's';
+  star.style.boxShadow = `0 0 ${size * 3}px ${color}, 0 0 ${size * 7}px ${color}`;
+  star.style.animationDuration = Math.random() * 8 + 8 + 's';
+  star.style.animationDelay = Math.random() * -16 + 's';
   starsContainer.appendChild(star);
+}
+
+/* Tiny warm/cool fireflies concentrated around the house / lower horizon */
+const fireflyColors = ['#fff7b2', '#fde68a', '#fef3c7', '#d9f99d', '#a7f3d0', '#bae6fd'];
+for (let i = 0; i < 55; i++) {
+  const firefly = document.createElement('div');
+  firefly.className = 'firefly';
+  const size = Math.random() * 2.4 + 1.4;
+  const color = fireflyColors[Math.floor(Math.random() * fireflyColors.length)];
+
+  /* Keep most lights around the visible house/ground area. */
+  firefly.style.left = (8 + Math.random() * 84) + '%';
+  firefly.style.top = (57 + Math.random() * 37) + '%';
+  firefly.style.width = size + 'px';
+  firefly.style.height = size + 'px';
+  firefly.style.backgroundColor = color;
+  firefly.style.boxShadow = `0 0 ${size * 4}px ${color}, 0 0 ${size * 9}px ${color}`;
+  firefly.style.setProperty('--drift-x', (Math.random() * 70 - 35) + 'px');
+  firefly.style.setProperty('--drift-y', (Math.random() * 55 - 28) + 'px');
+  firefly.style.animationDuration = (Math.random() * 3.5 + 3.5) + 's';
+  firefly.style.animationDelay = (Math.random() * -7) + 's';
+  starsContainer.appendChild(firefly);
 }
 
 /* DATE-BASED LUNAR PHASE — EXACTLY ONE IMAGE */
@@ -69,7 +92,6 @@ function updateMoonPhase() {
   const index = getMoonPhaseIndex(age);
   const filename = moonPhaseImages[index];
 
-  // Replace the existing image only. No second Moon is ever added.
   if (!moonImage.src.endsWith('/' + filename)) {
     moonImage.src = './' + filename;
   }
